@@ -11,7 +11,7 @@
                 <el-table-column type="selection" width="56"></el-table-column>
                 <el-table-column prop="id" label="编号" width="56"></el-table-column>
                 <el-table-column prop="name" label="职位名称" width="180"></el-table-column>
-                <el-table-column prop="createDate" label="创建时间" width="200"></el-table-column>
+                <el-table-column prop="createdate" label="创建时间" width="200"></el-table-column>
                 <el-table-column fixed="right" label="操作">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="showEditDialog(scope.$index, scope.row)">编辑</el-button>
@@ -55,16 +55,20 @@
             }
         },
         methods: {
+            //打开时加载
             async initPositions () {
                 const data = await this.getRequest('/system/basic/pos/')
                 if (data) {
                     this.positions = data.obj
                 }
             },
+
+            //添加
             async addPosition () {
                 if (this.pos.name) {
                     const resp = await this.postRequest('/system/basic/pos/', this.pos)
                     if (resp) {
+                        console.log("我丢名"+resp)
                         this.initPositions()
                         this.pos.name = ''
                     }
